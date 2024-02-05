@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import footerlogo from '../../public/assets/footerlogo.png'
 import  onelogo from '../../public/assets/onelogo.png'
 import  twologo from '../../public/assets/twologo.png'
@@ -60,19 +59,7 @@ const Footer = () => {
                 <span className="text-xl text-white sm:text-center  dark:text-white max-sm:text-center max-sm:mt-5">Copyright @ Milton Debnath 2020</span>
         </div>
     </div>
-=======
-const Footer = () => {
-  return (
-    <footer className="bg-gray-800 text-white p-4">
-    <div className="container mx-auto flex items-center justify-between">
-      <p>Copyright @ Milton Debnath 2020, All rights reserved</p>
-      <div className="flex space-x-4">
-        <a href="#" className="hover:text-gray-300">Privacy Policy</a>
-        <a href="#" className="hover:text-gray-300">Terms of Service</a>
-      </div>
-    </div>
-  </footer>
->>>>>>> 8957cc6572717c1565f0943ed210d590dab16f2a
+
   )
 }
 

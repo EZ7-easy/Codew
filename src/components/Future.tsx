@@ -3,11 +3,7 @@ import check from "../../public/assets/check.png"
 
 const Future = () => {
   return (
-<<<<<<< HEAD
     <div className="my-10 xl:mx-[300px] grid grid-cols-2 max-sm:grid-cols-1 md:mx-[20px]">
-=======
-    <div className="my-10 xl:mx-[300px] grid grid-cols-2 max-sm:grid-cols-1">
->>>>>>> 8957cc6572717c1565f0943ed210d590dab16f2a
         <div className="max-sm:mx-4 mx-auto my-auto">
             <h1 className="text-4xl font-bold">
                 Providing The World's Best <br/>

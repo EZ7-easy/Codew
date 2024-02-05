@@ -7,11 +7,8 @@ import Navbar from "@/components/Navbar"
 import Newsletter from "@/components/Newsletter"
 import Projects from "@/components/Projects"
 import Provide from "@/components/Provide"
-<<<<<<< HEAD
 import Subscribe from "@/components/Subscribe"
-=======
-import Subscribe from "@/components/subscribe"
->>>>>>> 8957cc6572717c1565f0943ed210d590dab16f2a
+
 
 const Home = () => {
   return (
@@ -26,10 +23,7 @@ const Home = () => {
         <Future/>
         <Feature/>
         <Subscribe/>
-<<<<<<< HEAD
         <Newsletter/>
-=======
->>>>>>> 8957cc6572717c1565f0943ed210d590dab16f2a
         <Footer/>
     </div>
   )
