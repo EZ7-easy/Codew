@@ -17,7 +17,11 @@ const Navbar = () => {
         <li className='p-4 text-[#6B625E] cursor-pointer text-xl font-bold hover:text-black'>Projects</li>
         <li className='p-4 text-[#6B625E] cursor-pointer text-xl font-bold hover:text-black'>Blog</li>
         <li className='p-4 text-[#6B625E] cursor-pointer text-xl font-bold hover:text-black'>About</li>
+<<<<<<< HEAD
         <button className=' px-[35px] py-[10px] bg-[#FF733B] rounded-md text-white text-xl  md:hidden'>Contact</button>
+=======
+        <button className=' px-[35px] py-[10px] bg-[#FF733B] rounded-md text-white text-xl'>Contact</button>
+>>>>>>> 8957cc6572717c1565f0943ed210d590dab16f2a
 
       </ul>
       <div onClick={handleNav} className='block md:hidden max-[780px]:visible'>
