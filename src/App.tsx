@@ -1,17 +1,25 @@
 import "./globals.css";
 import { Routes, Route } from "react-router-dom";
-import Home from "@/app/pages/Home" 
-import SigninForm from "./app/pages/SigninForm";
-import SignupForm from "./app/pages/SignupForm";
+import {Home} from "./_root/pages";
+import SigninForm from "./_auth/forms/SigninForm";
+import SignupForm from "./_auth/forms/SignupForm";
+import AuthLayout from "./_auth/AuthLayout";
+import RootLayout from "./_root/RootLayout";
 
 
 const App = () => {
   return (
     <main>
       <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/sign-in" element={<SigninForm/>} />
-        <Route path="/sign-up" element={<SignupForm/>} />
+        {/* Public Routes */}
+        <Route element={<AuthLayout/>}>
+          <Route path="/sign-in" element={<SigninForm/>} />
+          <Route path="/sign-up" element={<SignupForm/>} />
+        </Route>
+        {/* Private Routes */}
+        <Route element={<RootLayout/>}>
+          <Route index element={<Home/>} />
+        </Route>
       </Routes>
     </main>
   );
