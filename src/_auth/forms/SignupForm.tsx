@@ -101,13 +101,13 @@ async function onSubmit(values: z.infer<typeof SignUpValidation>){
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className='bg-[#FF733B]'>
+                    <a href="/"><Button type="submit" className='bg-[#FF733B]'>
                         {isLoading ? (
                             <div className="flex-center gap-2">
                                 <Loader/> Loading...
                             </div>
                         ):"Sign Up"}
-                    </Button>
+                    </Button></a>
                     <p className='text-center mt-2'>
 		                  Already have an account?
 		                  <Link to='/sign-in' className='text-primary-500 text-small-semibold ml-1'>Login</Link>

@@ -1,19 +1,10 @@
 import {Outlet, Navigate} from "react-router-dom";
 
 const RootLayout = () => {
-    const isAuthenticated = false;
+    const user = true;
 
-    return (
-        <>
-            {isAuthenticated ?
-                (<Navigate to={"/"}/>):
-                (<>
-                    <section>
-                        <Outlet/>
-                    </section>
-                </>)}
-        </>
-    )
+    return user ? <Outlet /> : <Navigate to="/sign-in" />
+
 }
 
 export default RootLayout
