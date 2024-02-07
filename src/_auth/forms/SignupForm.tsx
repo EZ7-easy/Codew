@@ -52,9 +52,7 @@ async function onSubmit(values: z.infer<typeof SignUpValidation>){
     })
 
     if(!session) {
-        return toast({
-            title: "Sign in failed, please try again",
-        })
+        navigate('/')
     }
 
     const isLoggedIn = await checkAuthUser();
@@ -64,7 +62,7 @@ async function onSubmit(values: z.infer<typeof SignUpValidation>){
 
         navigate('/')
     } else {
-        return toast({ title: "Sign up failed, please try again" })
+        navigate('/')
     }
 }
 

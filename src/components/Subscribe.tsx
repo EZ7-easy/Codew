@@ -1,27 +1,47 @@
-import arrow from "../../public/assets/arrow.png"
-import bolton from "../../public/assets/bolton.png"
-import brook from "../../public/assets/brook.png"
+import photo1 from '../../public/assets/bolton.png'
+import photo2 from '../../public/assets/brook.png'
+
+
+import { Card, CardContent } from "@/components/ui/card"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 const Subscribe = () => {
   return (
-    <div>
-        <div className="justify-between flex mt-[100px] xl:mx-[320px] md:mx-[40px]">
-            <div className="max-sm:mx-6 ">
-                <p className="text-4xl font-bold underline decoration-[#fc9063]">Customers Feedback</p><br/>
-                    <p className="text-[#a49e9b] text-xl">
-                        Present placerated agestas egestas cras rhone <br/>
-                        magna rutrum tellus laoret 
-                    </p>
-            </div>
-                <img src={arrow} alt="arrow" className="w-[100px] h-[40px] mt-11 max-sm:hidden"/>
-        </div>  
-
-        <div className="my-10 xl:mx-[250px] grid grid-cols-2 max-sm:grid-cols-1">
-            <img src={bolton} alt="image" className="m-auto"/>
-            <img src={brook} alt="image" className="m-auto"/>
+    <>
+        <div className="block mx-[10%]">
+            <p className="text-4xl font-bold underline decoration-[#fc9063]">Customers Feedback</p><br/>
+            <p className="text-[#a49e9b] text-xl">
+                Present placerated agestas egestas cras rhone <br/>
+                magna rutrum tellus laoret 
+            </p>
         </div>
 
-    </div>
+    <Carousel className="max-w-[80%] mx-[10%] mt-10">
+      <CarouselContent>
+        {Array.from({ length: 5 }).map((_, index) => (
+          <CarouselItem key={index}>
+            <div className="">
+              <Card>
+                <CardContent className="lg:flex max-h-full lg:justify-between">
+                  <img src={photo1} alt='photo' className='lg:w-[40%] max-sm:w-full'/>
+                  <img src={photo2} alt='photo' className='lg:w-[40%] max-sm:w-full'/>
+                </CardContent>
+              </Card>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious className='w-10 h-10 border-none bg-[#FF733B]'/>
+      <CarouselNext className='w-10 h-10 border-none bg-[#FF733B]' />
+    </Carousel>
+    </>
+    
   )
 }
 

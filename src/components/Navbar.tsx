@@ -12,7 +12,7 @@ const Navbar = () => {
     <div className='flex bg-[#f4ece0] justify-between items-center h-28 max-w-[1620px] mx-auto px-4 xl:mx-[10%]'>
     <img src={logo} alt='logo' className='cursor-pointer'/>
       <ul className='hidden md:flex  lg:space-x-5 space-x-0'>
-        <li className='p-4 text-[#6B625E] cursor-pointer text-xl font-bold hover:text-black'>Home</li>
+        <a href='/'><li className='p-4 text-[#6B625E] cursor-pointer text-xl font-bold hover:text-black'>Home</li></a>
         <li className='p-4 text-[#6B625E] cursor-pointer text-xl font-bold hover:text-black'>Services</li>
         <li className='p-4 text-[#6B625E] cursor-pointer text-xl font-bold hover:text-black'>Projects</li>
         <li className='p-4 text-[#6B625E] cursor-pointer text-xl font-bold hover:text-black'>Blog</li>
