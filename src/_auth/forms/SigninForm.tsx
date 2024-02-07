@@ -1,85 +1,139 @@
-import React, { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import logo from '../../../public/assets/logo.png';
-import features from '../../../public/assets/feature1.png';
-import appwrite from 'appwrite';
-import { account } from '@/lib/appwrite/config';
+import { Input } from "@/components/ui/input"
+import features from "../../../public/assets/features.png"
+import { Button } from "@/components/ui/button"
+// import logo from "../../../public/assets/logo.png"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import {
+  Form, FormControl, FormField, FormItem, FormLabel, FormMessage,
+} from "@/components/ui/form"
+import {SignInValidation, SignUpValidation} from "@/lib/validation/SignUpValidation"
+import {z} from "zod";
+import Loader from "@/components/shared/Loader.tsx";
+import { Link, useNavigate } from "react-router-dom"
+import { useToast } from "@/components/ui/use-toast"
+import { useCreateUserAccount, useSignInAccount,  } from "@/lib/react-query/queriesAndMutations"
+import { useUserContext } from "@/context/AuthContext"
 
-const SigninForm: React.FC = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+const SigninForm = () => {
+  const { toast } = useToast();
+  const { checkAuthUser, isLoading: isUserloading } = useUserContext();
+  const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const { mutateAsync: signInAccount, isLoading: isSigningIn } = 
+  useSignInAccount()
 
-    try {
-      await appwrite.account.createSession(email, password);
-      // Redirect or perform any action after successful login
-    } catch (error) {
-      console.error('Login failed:', error);
-      // Handle login failure, show error message, etc.
+  const form = useForm<z.infer<typeof SignInValidation>>({
+    resolver: zodResolver(SignInValidation),
+    defaultValues: {
+        email: '',
+        password: '',
+    },
+})
+
+
+async function onSubmit(values: z.infer<typeof SignUpValidation>){
+    const session = await signInAccount({
+        email: values.email,
+        password: values.password,
+    })
+
+    if(!session) {
+        return toast({
+            title: "Sign in failed, please try again",
+        })
     }
-  };
+
+    const isLoggedIn = await checkAuthUser();
+
+    if(isLoggedIn){
+        form.reset();
+
+        navigate('/')
+    } else {
+        return toast({ title: "Sign up failed, please try again" })
+    }
+}
 
   return (
-    <div className="xl:mx-[100px] grid grid-cols-2 max-sm:grid-cols-1 md:mx-[20px] my-auto mt-[100px]">
-      <div className="max-sm:mx-4 mx-auto my-auto">
-        <img src={logo} alt="image" className="m-auto mb-11 w-[200px]" />
-        <h1 className="text-4xl font-bold">
-          <span className="underline decoration-[#F4D3A1]">Sign in to your account</span>
-        </h1>
-        <form onSubmit={handleLogin}>
-          <div className="mt-10">
-            <p className="text-lg font-bold">Your Email</p>
-            <Input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@company.com"
-              className="w-[395px] p-5 border-[#F4D3A1] mt-2 rounded-[10px]"
-            />
-          </div>
-          <div className="mt-4">
-            <p className="text-lg font-bold">Password</p>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-[395px] p-5 border-[#F4D3A1] mt-2 rounded-[10px]"
-            />
-          </div>
-          <div className="flex items-center justify-between mt-4">
-            <div className="flex items-start">
-              <div className="flex items-center h-5">
-                <input
-                  id="remember"
-                  aria-describedby="remember"
-                  type="checkbox"
-                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                />
-              </div>
-              <div className="ml-3 text-sm">
-                <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">
-                  Remember me
-                </label>
-              </div>
+    <div className="xl:mx-[100px] grid xl:grid-cols-2 max-sm:grid-cols-1 md:mx-[20px] my-auto xl: mt-[100px] ">
+      <img src={features} alt="image" className="max-sm:mt-10 m-auto md:mt-[100px]"/>
+      <div className="mx-auto my-auto">
+      <Form {...form}>
+            <div className="sm:w-420 flex-center flex-col">
+                <img src="/public/assets/logo.png" alt='logo'/>
+                <h2 className='h3-bold md:h2-bold pt-5 sm:pt-12'>Create New Account</h2>
+                <p className="text-light-3 small-medium md:base-regular mt-2">To use ReactGram enter your details</p>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full mt-4">
+                    <FormField
+                        control={form.control}
+                        name="name"
+                        render={({field}) => (
+                            <FormItem>
+                                <FormLabel>Name</FormLabel>
+                                <FormControl>
+                                    <Input type='text' className="" {...field} />
+                                </FormControl>
+                                <FormMessage/>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="username"
+                        render={({field}) => (
+                            <FormItem>
+                                <FormLabel>Username</FormLabel>
+                                <FormControl>
+                                    <Input type='text' className="" {...field} />
+                                </FormControl>
+                                <FormMessage/>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({field}) => (
+                            <FormItem>
+                                <FormLabel>Email</FormLabel>
+                                <FormControl>
+                                    <Input type='email' className="" {...field} />
+                                </FormControl>
+                                <FormMessage/>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({field}) => (
+                            <FormItem>
+                                <FormLabel>Password</FormLabel>
+                                <FormControl>
+                                    <Input type='password' className="" {...field} />
+                                </FormControl>
+                                <FormMessage/>
+                            </FormItem>
+                        )}
+                    />
+                    <a href="/"><Button type="submit" className='bg-[#FF733B]'>
+                        {isCreatingUser ? (
+                            <div className="flex-center gap-2">
+                                <Loader/> Loading...
+                            </div>
+                        ):"Sign Up"}
+                    </Button></a>
+                    <p className='text-center mt-2'>
+		                  Already have an account?
+		                  <Link to='/sign-in' className='text-primary-500 text-small-semibold ml-1'>Login</Link>
+                    </p>
+                </form>
             </div>
-            <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
-              Forgot password?
-            </a>
-          </div>
-          <div>
-            <Button className="bg-[#F4D3A1] w-[395px] rounded-[10px] p-6 text-[#FF733B] mt-10" type="submit">
-              Sign in
-            </Button>
-          </div>
-        </form>
-      </div>
-      <img src={features} alt="image" className="max-sm:mt-10 m-auto" />
-    </div>
-  );
-};
+        </Form>
+        </div>
+      </div> 
+  )
+}
 
-export default SigninForm;
+export default SigninForm
